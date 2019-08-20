@@ -71,18 +71,22 @@ mpeg4.startStreamingServer();
 // Set up messages from edgeHub
 Client.fromEnvironment(Transport, function (err, client) {
   if (err) {
-    throw err;
+    console.log('Error creating EdgeHub client' + err.toString());
   } else {
+    
+    console.log('EdgeHub client initialized');
     client.on('error', function (err) {
+      console.log('Error from EdgeHub client' + err.toString());
       throw err;
     });
 
     // connect to the Edge instance
     client.open(function (err) {
       if (err) {
+        console.log('Error opening EdgeHub client' + err.toString());
         throw err;
       } else {
-        console.log('IoT Hub module client initialized');
+        console.log('EdgeHub client connected');
 
         // Act on input messages to the module.
         client.onMethod('capture', captureImage);

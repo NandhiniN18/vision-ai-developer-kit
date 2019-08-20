@@ -1,9 +1,9 @@
 # Copy all files from the client into the client container
-FROM nandhinitestregistry.azurecr.io/taggingclient:v0.0.7 as client
+FROM client_base_arm32 as client
 COPY /CameraClientModule/. .
 
 # The base container is the server container
-FROM nandhinitestregistry.azurecr.io/taggingserver:v0.0.6
+FROM server_base_arm32
 
 # Copy all files from the server into the server container
 WORKDIR /app/server
