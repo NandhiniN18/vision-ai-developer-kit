@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:slim
 
 # To build the client
 WORKDIR /app
@@ -9,10 +9,16 @@ COPY /CameraClientModule/yarn.lock /app/client/
 WORKDIR /app/client
 RUN yarn install
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    ffmpeg \
+    && ls /var/lib/apt/lists \
+    && rm -rf /var/lib/apt/lists/*
+
 # To build the server
 WORKDIR /app
 
-COPY package*.json /app/server/
+COPY /CameraServerModule/package*.json /app/server/
 
 WORKDIR /app/server
 RUN npm install -q \
